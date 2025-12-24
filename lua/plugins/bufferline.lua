@@ -42,7 +42,6 @@ return {
         separator_style = "thin",
         always_show_bufferline = true,
       },
-      highlights = require("catppuccin.groups.integrations.bufferline").get(),
     })
     
     -- キーマップ
