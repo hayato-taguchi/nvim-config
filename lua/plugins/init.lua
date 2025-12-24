@@ -27,5 +27,6 @@ require("lazy").setup({
   { import = "plugins.telescope" },
   { import = "plugins.which-key" },
   { import = "plugins.lsp" },
+  { import = "plugins.lualine" },
 })
 
