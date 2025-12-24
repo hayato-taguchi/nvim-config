@@ -29,5 +29,6 @@ require("lazy").setup({
   { import = "plugins.lsp" },
   { import = "plugins.lualine" },
   { import = "plugins.bufferline" },
+  { import = "plugins.noice" },
 })
 
