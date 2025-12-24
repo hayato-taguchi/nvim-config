@@ -28,5 +28,6 @@ require("lazy").setup({
   { import = "plugins.which-key" },
   { import = "plugins.lsp" },
   { import = "plugins.lualine" },
+  { import = "plugins.bufferline" },
 })
 

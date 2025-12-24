@@ -10,6 +10,17 @@ return {
       integrations = {
         gitsigns = true,
         treesitter = true,
+        mason = true,
+        cmp = true,
+        native_lsp = {
+          enabled = true,
+        },
+        telescope = {
+          enabled = true,
+        },
+        which_key = true,
+        lsp_trouble = true,
+        noice = true,
       },
       term_colors = true
     })
