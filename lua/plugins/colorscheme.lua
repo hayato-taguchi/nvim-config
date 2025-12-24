@@ -11,6 +11,7 @@ return {
         gitsigns = true,
         treesitter = true,
       },
+      term_colors = true
     })
     vim.cmd.colorscheme("catppuccin")
   end,

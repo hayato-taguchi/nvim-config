@@ -22,5 +22,6 @@ require("lazy").setup({
   { import = "plugins.git" },
   { import = "plugins.toggleterm" },
   { import = "plugins.treesitter" },
+  { import = "plugins.no-neck-pain" },
 })
 
