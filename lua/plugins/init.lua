@@ -26,5 +26,6 @@ require("lazy").setup({
   { import = "plugins.conform" },
   { import = "plugins.telescope" },
   { import = "plugins.which-key" },
+  { import = "plugins.lsp" },
 })
 
