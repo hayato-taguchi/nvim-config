@@ -24,5 +24,6 @@ require("lazy").setup({
   { import = "plugins.treesitter" },
   { import = "plugins.no-neck-pain" },
   { import = "plugins.conform" },
+  { import = "plugins.telescope" },
 })
 
