@@ -25,5 +25,6 @@ require("lazy").setup({
   { import = "plugins.no-neck-pain" },
   { import = "plugins.conform" },
   { import = "plugins.telescope" },
+  { import = "plugins.which-key" },
 })
 
