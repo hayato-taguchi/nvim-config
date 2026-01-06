@@ -1,5 +1,7 @@
 vim.lsp.enable({
-  "lua_ls"
+  "lua_ls",
+  "ts_ls",
+  "pyright"
 })
 
 -- 言語サーバーがアタッチされた時に呼ばれる
@@ -22,7 +24,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
           function() vim.lsp.buf.hover({ border = "single" }) end,
           { buffer = buf, desc = "Show hover documentation" })
       end
-  
+
+      -- Diagnostics（エラー確認）
+      vim.keymap.set("n", "<leader>cd",
+        function() vim.diagnostic.open_float({ border = "single" }) end,
+        { buffer = buf, desc = "Show line diagnostics" })
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { buffer = buf, desc = "Previous diagnostic" })
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { buffer = buf, desc = "Next diagnostic" })
+
       if client:supports_method("textDocument/completion") then
         vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
       end
