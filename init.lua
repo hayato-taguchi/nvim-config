@@ -19,5 +19,7 @@ if vim.g.vscode then
 else
   require("config.options")
   require("config.keymaps")
+  require("config.lazy")
+  require("config.lsp")
   require("plugins")
 end

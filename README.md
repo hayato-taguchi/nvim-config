@@ -4,16 +4,20 @@ VSCode Neovim と 通常の Neovim 両対応の設定ファイル。
 
 ## 必要環境
 
-- **Neovim** 0.9.0+
+- **Neovim** 0.11.0+（LSP 標準 API を使用）
 - **iTerm2**（True Color 対応のため）
 - **Nerd Font**（アイコン表示のため）
   ```bash
   brew install --cask font-hack-nerd-font
   ```
-- **Node.js**（LSP、Prettier のため）
+- **Node.js**（Prettier のため）
 - **ripgrep**（Telescope grep 用）
   ```bash
   brew install ripgrep
+  ```
+- **lua-language-server**（Lua LSP）
+  ```bash
+  brew install lua-language-server
   ```
 
 ## インストール
@@ -31,13 +35,16 @@ nvim
 ```
 ~/.config/nvim/
 ├── init.lua                    # エントリポイント
+├── after/                      # init.lua読み込み後に自動読み込み
+│   └── lsp/                    # LSPサーバー個別設定（自動読み込み）
+│       └── lua_ls.lua          # Lua LSP設定
 └── lua/
     ├── config/
     │   ├── options.lua         # 基本設定
     │   ├── keymaps.lua         # キーマッピング
+    │   ├── lsp.lua             # LSP設定（Neovim 0.11標準API）
     │   └── vscode.lua          # VSCode専用設定
     └── plugins/
-        ├── init.lua            # lazy.nvimセットアップ
         ├── colorscheme.lua     # catppuccin
         ├── oil.lua             # ファイルエクスプローラー
         ├── git.lua             # Git関連
@@ -47,7 +54,7 @@ nvim
         ├── conform.lua         # コードフォーマッター
         ├── telescope.lua       # ファジーファインダー
         ├── which-key.lua       # キーマップヘルプ
-        ├── lsp.lua             # LSP + 補完
+        ├── nvim-lspconfig.lua  # nvim-lspconfigプラグイン
         ├── lualine.lua         # ステータスライン
         ├── bufferline.lua      # タブ風バッファ
         └── noice.lua           # モダンUI
@@ -90,18 +97,15 @@ nvim
 
 ### LSP（コード操作）
 
-| キー        | 説明                   |
-| ----------- | ---------------------- |
-| `gd`        | 定義へジャンプ         |
-| `gD`        | 宣言へジャンプ         |
-| `gr`        | 参照一覧               |
-| `gi`        | 実装へジャンプ         |
-| `K`         | ホバードキュメント表示 |
-| `<Space>ca` | コードアクション       |
-| `<Space>rn` | シンボルをリネーム     |
-| `<Space>cd` | 行のエラー詳細を表示   |
-| `[d`        | 前のエラーへ移動       |
-| `]d`        | 次のエラーへ移動       |
+| キー       | 説明                                     |
+| ---------- | ---------------------------------------- |
+| `gd`       | 定義へジャンプ                           |
+| `<Space>k` | ホバードキュメント表示                   |
+| `<C-n>`    | 補完候補を次へ（Neovim標準）             |
+| `<C-p>`    | 補完候補を前へ（Neovim標準）             |
+| `<C-y>`    | 補完を確定（Neovim標準）                 |
+
+> 補完は Neovim 0.11 の標準補完 API を使用しています。入力中に自動で候補が表示されます。
 
 ### コードフォーマット
 
@@ -166,26 +170,32 @@ nvim
 | conform.nvim      | コードフォーマッター（Prettier 等） |
 | telescope.nvim    | ファジーファインダー                |
 | which-key.nvim    | キーマップヘルプ表示                |
-| mason.nvim        | LSP サーバー管理                    |
-| nvim-lspconfig    | LSP 設定                            |
-| nvim-cmp          | 自動補完                            |
+| nvim-lspconfig    | LSP プリセット集                    |
 | lualine.nvim      | ステータスライン                    |
 | bufferline.nvim   | タブ風バッファ表示                  |
 | noice.nvim        | モダンな UI                         |
 
 ## LSP サーバー
 
-以下の LSP サーバーが自動インストールされます：
+Neovim 0.11 の標準 API を使用しています（nvim-lspconfig でプリセットを読み込み）。
+
+### 有効なサーバー
 
 - `lua_ls` - Lua
-- `ts_ls` - TypeScript / JavaScript
-- `pyright` - Python
-- `jsonls` - JSON
-- `yamlls` - YAML
-- `html` - HTML
-- `cssls` - CSS
 
-`:Mason` コマンドで追加の LSP サーバーをインストールできます。
+### 言語サーバーの追加方法
+
+1. 言語サーバーを手動でインストール（例: `brew install lua-language-server`）
+2. `lua/config/lsp.lua` の `vim.lsp.enable()` に追加
+3. 必要に応じて `after/lsp/<server_name>.lua` で個別設定
+
+```lua
+-- lua/config/lsp.lua
+vim.lsp.enable({
+  "lua_ls",
+  "ts_ls",  -- 追加する場合
+})
+```
 
 ## Tips
 
