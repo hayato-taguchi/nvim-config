@@ -21,5 +21,4 @@ else
   require("config.keymaps")
   require("config.lazy")
   require("config.lsp")
-  require("plugins")
 end
