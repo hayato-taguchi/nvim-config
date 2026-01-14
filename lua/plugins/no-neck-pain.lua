@@ -1,7 +1,8 @@
--- no-neck-pain.nvim: エディタを中央に配置
+-- no-neck-pain.nvim: エディタを中央に配置（現在無効化中）
 return {
   "shortcuts/no-neck-pain.nvim",
   version = "*",
+  enabled = false,  -- 一時的に無効化
   config = function()
     require("no-neck-pain").setup({
       width = 100,
