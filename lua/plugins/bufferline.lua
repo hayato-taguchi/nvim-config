@@ -9,7 +9,14 @@ return {
         mode = "buffers",
         themable = true,
         numbers = "none",
-        close_command = "bdelete! %d",
+        close_command = function(bufnr)
+          -- 最後のバッファなら空のバッファを作成してから閉じる
+          local bufs = vim.fn.getbufinfo({ buflisted = 1 })
+          if #bufs <= 1 then
+            vim.cmd("enew")
+          end
+          vim.cmd("bdelete! " .. bufnr)
+        end,
         right_mouse_command = "bdelete! %d",
         indicator = {
           style = "icon",
@@ -29,7 +36,7 @@ return {
         end,
         offsets = {
           {
-            filetype = "oil",
+            filetype = "neo-tree",
             text = "File Explorer",
             highlight = "Directory",
             separator = true,
@@ -43,12 +50,21 @@ return {
         always_show_bufferline = true,
       },
     })
-    
+
+    -- バッファを安全に閉じる関数
+    local function close_buffer()
+      local bufs = vim.fn.getbufinfo({ buflisted = 1 })
+      if #bufs <= 1 then
+        vim.cmd("enew")
+      end
+      vim.cmd("bdelete!")
+    end
+
     -- キーマップ
     vim.keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
     vim.keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })
     vim.keymap.set("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pin buffer" })
-    vim.keymap.set("n", "<leader>bx", "<cmd>bdelete<cr>", { desc = "Close buffer" })
+    vim.keymap.set("n", "<leader>bx", close_buffer, { desc = "Close buffer" })
     vim.keymap.set("n", "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", { desc = "Close other buffers" })
   end,
 }
