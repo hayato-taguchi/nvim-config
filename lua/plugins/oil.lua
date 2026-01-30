@@ -1,6 +1,7 @@
--- oil.nvim: ファイル操作
+-- oil.nvim: ファイル操作（現在無効化中）
 return {
   "stevearc/oil.nvim",
+  enabled = false,  -- neo-tree に移行したため無効化
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local detail = false
